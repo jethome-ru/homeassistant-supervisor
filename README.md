@@ -4,7 +4,7 @@ build tools</h3>
 <p align=right>&nbsp;</p>
 
 [![GitHub last commit (branch)](https://img.shields.io/github/last-commit/jethome-ru/homeassistant-supervisor/main)](https://github.com/jethome-ru/homeassistant-supervisor/commits/main)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jethome-ru/homeassistant-supervisor/Build)](https://github.com/jethome-ru/homeassistant-supervisor/actions?query=workflow%3ABuild)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/jethome-ru/homeassistant-supervisor/Autorebase)](https://github.com/jethome-ru/homeassistant-supervisor/actions?query=workflow%3AAutorebase)
 
 ## JetHome Home Assistant Supervisor repository
 

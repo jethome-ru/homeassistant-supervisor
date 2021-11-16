@@ -1,0 +1,40 @@
+name: Autorebase
+
+on:
+  schedule:
+    - cron:  '30 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  prepare:
+    name: Prepare repository
+    runs-on: [self-hosted]
+    if: ${{ github.repository_owner == 'jethome-ru' }}
+    steps:
+      - name: Clean git
+        run: |
+          mkdir -p rebase_hasu
+          cd rebase_hasu
+          git remote remove upstream || true
+      - name: Checkout ha-su repository (main)
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          repository: jethome-ru/homeassistant-supervisor
+          path: rebase_hasu
+          ref: main
+      - name: Rebase ha-su repository (main)
+        run: |
+          cd rebase_hasu
+          UPSTREAM=https://github.com/home-assistant/supervisor.git
+          git remote add upstream $UPSTREAM  || true
+          git fetch upstream main
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name  "GitHub Actions"
+          git rebase upstream/main
+          if [ "$(git status | grep diverged)" ]; then
+            git push origin $(git branch --show-current) --force-with-lease;
+          else
+            git push origin $(git branch --show-current)
+          fi;
+          git remote remove upstream || true
