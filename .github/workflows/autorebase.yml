@@ -21,6 +21,7 @@ jobs:
         with:
           fetch-depth: 0
           repository: jethome-ru/homeassistant-supervisor
+          token: ${{ secrets.HASSOS_UPDATE_TOKEN }}
           path: rebase_hasu
           ref: main
       - name: Rebase ha-su repository (main)
@@ -32,9 +33,11 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name  "GitHub Actions"
           git rebase upstream/main
+          git fetch --tags upstream
           if [ "$(git status | grep diverged)" ]; then
             git push origin $(git branch --show-current) --force-with-lease;
           else
             git push origin $(git branch --show-current)
           fi;
+          git push origin --tags
           git remote remove upstream || true
